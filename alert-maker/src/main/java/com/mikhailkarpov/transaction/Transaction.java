@@ -3,6 +3,8 @@ package com.mikhailkarpov.transaction;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonCreator;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Transaction implements Serializable {
 
@@ -13,11 +15,17 @@ public class Transaction implements Serializable {
   private final BigDecimal amount;
   private final Instant createdAt;
 
-  public Transaction(long id, long customerId, BigDecimal amount, Instant createdAt) {
+  @JsonCreator
+  public Transaction(
+      @JsonProperty("id") long id,
+      @JsonProperty("customerId") long customerId,
+      @JsonProperty("amount") BigDecimal amount,
+      @JsonProperty("createdAt") Instant createdAt
+  ) {
     this.id = id;
     this.customerId = customerId;
     this.amount = amount;
-    this.createdAt = createdAt;
+    this.createdAt = createdAt != null ? createdAt : Instant.now();
   }
 
   public Transaction(long id, long customerId, BigDecimal amount) {
