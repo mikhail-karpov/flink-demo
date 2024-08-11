@@ -1,0 +1,27 @@
+networks:
+  flink-demo: {}
+
+services:
+  jobmanager:
+    image: flink:1.17-java11
+    container_name: jobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+    command: jobmanager
+    networks:
+      - flink-demo
+    ports:
+      - '8081:8081'
+
+  taskmanager:
+    image: flink:1.17-java11
+    container_name: taskmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+    command: taskmanager
+    networks:
+      - flink-demo

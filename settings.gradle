@@ -1,2 +1,3 @@
 rootProject.name = 'flink-demo'
+include 'alert-maker'
 
